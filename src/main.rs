@@ -73,7 +73,7 @@ fn main() {
 
         if check_gold(digest, &preimage) >= N_GOLD_MD5 {
             println!(
-                "Only letters match with {} characters! md5({}) {:x}",
+                "Gold match with {} characters! md5({}) {:x}",
                 check_gold(digest, &preimage),
                 std::str::from_utf8(&preimage).unwrap(),
                 digest
@@ -173,5 +173,5 @@ fn check_gold(digest: md5::Digest, preimage: &[u8; 32]) -> usize {
         }
     }
 
-    unimplemented!()
+    32
 }
