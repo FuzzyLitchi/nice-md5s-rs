@@ -1,14 +1,13 @@
 use rand::seq::SliceRandom;
-use rand::Rng;
 use std::io::Write;
 
 #[allow(dead_code)]
 const N_MD5_OF_DIGITS: usize = 32;
-const N_MD5_OF_LETTERS: usize = 24;
+const N_MD5_OF_LETTERS: usize = 27;
 const N_GOLD_MD5: usize = 9;
-const N_NICE_MATCH: usize = 9;
-const N_E_MD5: usize = 7;
-const N_PI_MD5: usize = 8;
+const N_NICE_MATCH: usize = 10;
+const N_E_MD5: usize = 9;
+const N_PI_MD5: usize = 9;
 
 const HEX_CHARS: [u8; 16] = [
     b'0', b'1', b'2', b'3', b'4', b'5', b'6', b'7', b'8', b'9', b'a', b'b', b'c', b'd', b'e', b'f',
@@ -29,7 +28,7 @@ fn main() {
 
         if check_nice_match(digest) >= N_NICE_MATCH {
             println!(
-                "Perfect match with {} characters! md5({}) {:x}",
+                "Nice match with {} characters! md5({}) {:x}",
                 check_nice_match(digest),
                 std::str::from_utf8(&preimage).unwrap(),
                 digest
@@ -38,7 +37,7 @@ fn main() {
 
         if check_constant_match(digest, &PI_DIGITS) >= N_PI_MD5 {
             println!(
-                "πs match with {} characters! md5({}) {:x}",
+                "π match with {} characters! md5({}) {:x}",
                 check_constant_match(digest, &PI_DIGITS),
                 std::str::from_utf8(&preimage).unwrap(),
                 digest
@@ -92,8 +91,7 @@ fn main() {
         }
 
         let char = HEX_CHARS.choose(&mut rng).unwrap();
-        let index = rng.gen_range(0..preimage.len());
-        preimage[index] = *char;
+        preimage[iter_count as usize % preimage.len()] = *char;
     }
 }
 
